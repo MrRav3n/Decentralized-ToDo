@@ -5,9 +5,9 @@ class Navbar extends React.Component{
     return(
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
-            <a className="navbar-brand" href="#">Navbar w/ text</a>
+            <a className="navbar-brand" href="#">To-Do App</a>
              <span className="navbar-text">
-                    {this.props.account}
+                    Your account: {this.props.account}
              </span>
             </div>
         </nav>

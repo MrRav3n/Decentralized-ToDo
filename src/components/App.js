@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Web3 from 'web3'
 import './App.css';
 import Navbar from "./Navbar";
+import ToDoList from "./ToDoList";
+
+
 class App extends Component {
 
   async componentWillMount() {
@@ -37,6 +40,7 @@ class App extends Component {
     return (
       <div>
         <Navbar account={this.state.account}/>
+        <ToDoList />
       </div>
     );
   }
