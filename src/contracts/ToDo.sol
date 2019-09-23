@@ -2,7 +2,7 @@ pragma solidity ^0.5.8;
 
 contract ToDo {
 
-    uint toDoCount;
+    uint public toDoCount;
 
     struct toDoStruct {
         uint id;
