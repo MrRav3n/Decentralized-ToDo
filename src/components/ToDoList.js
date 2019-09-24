@@ -12,7 +12,7 @@ class ToDoList extends React.Component {
             <form className="form-inline" onSubmit = {(event) => {
                 event.preventDefault();
                 this.props.onClick(this.newTask.value);
-                
+
                 }} 
                 >
                 
