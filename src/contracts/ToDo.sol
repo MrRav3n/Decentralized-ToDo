@@ -21,14 +21,19 @@ contract ToDo {
         string content,
         bool completed
     );
+    constructor() public {
+        createNewTask("123");
+        createNewTask("Dawid");
+    }
 
     mapping(uint => toDoStruct) public tasks;
 
     function createNewTask(string memory _content) public {
         require(bytes(_content).length>0);
-        toDoCount++;
+         toDoCount++;
         tasks[toDoCount] = toDoStruct(toDoCount, _content, false);
         emit CreateNewTaskEvent(toDoCount, _content, false);
+       
     }
 
     function finishTask(uint _id) public {

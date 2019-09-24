@@ -1,18 +1,33 @@
 import React from 'react'
 
 class ToDoList extends React.Component {
+
+    
     render() {
+        
+       
         return(
-            <form className="mt-4">
-                <div className="form-row d-flex justify-content-center align-items-center">
-                    <div className="col-md-5 col-8">
-                        <input type="text" className="form-control" placeholder="Add To-Do"/>
-                    </div>
-                    <div className="col-1">
-                        <button type="submit" className="btn btn-primary my-1">Submit</button>
-                    </div>
-                </div>
+            <span>
+            <div className="d-flex justify-content-center mt-5">
+            <form className="form-inline ">
+                
+                <input type="text" className="form-control mr-2" placeholder="Add To Do" />
+                <button type="submit" className="btn btn-primary mb-2 mt-2">Add to do</button>
+               
             </form>
+           </div>
+           <div>
+            
+            <ul className="list-group d-flex  align-items-center mt-5">
+            {this.props.tasks.map((task) => {
+                return(
+                    <div className="list-group-item col-4 font-weight-bolder" key={task.id}>
+                    <li>{task.content}</li>
+                    </div>
+            );})}
+            </ul>
+             </div>
+            </span>
         );
     }
 }

@@ -33,11 +33,11 @@ class App extends Component {
       const toDo = web3.eth.Contract(ToDo.abi, networkData.address);
       this.setState({toDo});
       const toDoCount = await toDo.methods.toDoCount().call();
-      for(let i=0; i<=toDoCount; i++) {
+      for(let i=1; i<=toDoCount; i++) {
         const task = await toDo.methods.tasks(i).call();
         this.setState({tasks : [...this.state.tasks, task]})
       }
-      console.log(this.state.tasks)
+    
     } else {
       alert("Cannot connect to network")
     }
@@ -56,7 +56,7 @@ class App extends Component {
     return (
       <div>
         <Navbar account={this.state.account}/>
-        <ToDoList />
+        <ToDoList tasks = {this.state.tasks} />
       </div>
     );
   }
