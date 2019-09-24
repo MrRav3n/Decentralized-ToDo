@@ -15,7 +15,7 @@ class App extends Component {
 
   loadWeb3() {
     if(window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
+      window.web3 = new Web3(window.ethereum, );
       window.ethereum.enable();
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
@@ -23,6 +23,9 @@ class App extends Component {
       alert("Cannot connect to blockchain")
     }
   }
+
+  
+
   async loadBlockchainData() {
     const web3 = window.web3;
     const account = await web3.eth.getAccounts();
@@ -31,6 +34,7 @@ class App extends Component {
     const networkData = ToDo.networks[networkId];
     if(networkData) {
       const toDo = web3.eth.Contract(ToDo.abi, networkData.address);
+      this.setState({toDo})
       this.setState({toDo});
       const toDoCount = await toDo.methods.toDoCount().call();
       for(let i=1; i<=toDoCount; i++) {
@@ -42,7 +46,12 @@ class App extends Component {
       alert("Cannot connect to network")
     }
   }
-
+  createNewTask(newTask) {
+    this.state.toDo.methods.createNewTask(newTask).send({from: this.state.account})
+    .once('receipt', (receipt) => {
+      console.log("123");
+    });
+  } 
 
   constructor(props) {
     super(props);
@@ -56,7 +65,7 @@ class App extends Component {
     return (
       <div>
         <Navbar account={this.state.account}/>
-        <ToDoList tasks = {this.state.tasks} />
+        <ToDoList onClick={this.createNewTask.bind(this)} tasks = {this.state.tasks} />
       </div>
     );
   }

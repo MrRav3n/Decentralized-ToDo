@@ -22,8 +22,7 @@ contract ToDo {
         bool completed
     );
     constructor() public {
-        createNewTask("123");
-        createNewTask("Dawid");
+        
     }
 
     mapping(uint => toDoStruct) public tasks;
