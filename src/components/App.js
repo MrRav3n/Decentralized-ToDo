@@ -13,7 +13,7 @@ class App extends Component {
     await this.loadBlockchainData();
     await this.loadContract();
   }
-
+  //loading web3 into website
   loadWeb3() {
     if(window.ethereum) {
       window.web3 = new Web3(window.ethereum, );
@@ -26,13 +26,13 @@ class App extends Component {
   }
 
 
-
+  //loading accounts
   async loadBlockchainData() {
     const web3 = window.web3;
     const account = await web3.eth.getAccounts();
     this.setState({account: account[0]});
-
   }
+  //loading smart contract
   async loadContract() {
     const web3 = window.web3;
     const networkId = await web3.eth.net.getId();
@@ -41,22 +41,21 @@ class App extends Component {
       const toDo = web3.eth.Contract(ToDo.abi, networkData.address);
       this.setState({toDo})
       this.setState({toDo});
-
       this.refreshPage();
       this.loadTasksCompleted();
-    this.setState({loading: false})
+      this.setState({loading: false})
     } else {
       alert("Cannot connect to network")
     }
   }
-
+  //create new task dependencies
   async createNewTask(newTask) {
       this.setState({loading: true})
-    this.state.toDo.methods.createNewTask(newTask).send({from: this.state.account}, (e) => {
-     this.checkBlockTime();
+      this.state.toDo.methods.createNewTask(newTask).send({from: this.state.account}, (e) => {
+      this.checkBlockTime();
     })
   }
-
+  //function that checks if block with transation is mined
   async checkBlockTime() {
       //sleep function
     const sleep = (milliseconds) => {
@@ -74,7 +73,7 @@ class App extends Component {
     this.refreshPage();
     this.loadTasksCompleted();
     }
-
+    //finishTask
     async finishTask(id) {
         this.setState({loading:true})
         const task = await this.state.toDo.methods.tasks(id).call();
@@ -83,57 +82,57 @@ class App extends Component {
                   this.checkBlockTime();
               })
 
-      }
+         }
     }
     async refreshPage() {
         this.setState({tasks: []});
         const toDoCount = await this.state.toDo.methods.toDoCount().call();
         for(let i=1; i<=toDoCount; i++) {
-         const task = await this.state.toDo.methods.tasks(i).call();
-         if(task.completed === false) {
-         this.setState({tasks : [...this.state.tasks, task]})
-         }
-     }
- }
-
- async loadTasksCompleted() {
-     this.setState({tasksCompleted: []});
-     const toDoCount = await this.state.toDo.methods.toDoCount().call();
-     for(let i=1; i<=toDoCount; i++) {
-      const task = await this.state.toDo.methods.tasks(i).call();
-      if(task.completed === true) {
-      this.setState({tasksCompleted : [...this.state.tasksCompleted, task]})
-      }
-  }
-}
-
-
-
-
-
-  constructor(props) {
-    super(props);
-    this.state = {
-        account: '',
-        tasks: [],
-        loading: true,
-        tasksCompleted: []
-
+            const task = await this.state.toDo.methods.tasks(i).call();
+            if(task.completed === false) {
+            this.setState({tasks : [...this.state.tasks, task]})
+            }
+        }
     }
-  }
+
+     async loadTasksCompleted() {
+         this.setState({tasksCompleted: []});
+         const toDoCount = await this.state.toDo.methods.toDoCount().call();
+         for(let i=1; i<=toDoCount; i++) {
+             const task = await this.state.toDo.methods.tasks(i).call();
+             if(task.completed === true) {
+                 this.setState({tasksCompleted : [...this.state.tasksCompleted, task]})
+             }
+         }
+    }
+
+
+
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            account: '',
+            tasks: [],
+            loading: true,
+            tasksCompleted: []
+
+        }
+    }
 
   render() {
-    return (
-      <div>
-        <Navbar account={this.state.account}/>
-          {this.state.loading
+      return(
+          <div>
+                <Navbar account={this.state.account}/>
+                {this.state.loading
                 ? <div className="container mt-5"><h1 className="text-center">Loading blockchain data...</h1></div>
                 : <ToDoList onClick={this.createNewTask.bind(this)} tasksCompleted={this.state.tasksCompleted} tasks = {this.state.tasks} checkboxOnClick={this.finishTask.bind(this)}/>
-          }
+                }
 
-      </div>
+           </div>
     );
-  }
+   }
 }
 
 export default App;

@@ -22,7 +22,7 @@ contract ToDo {
         bool completed
     );
     constructor() public {
-        
+
     }
 
     mapping(uint => toDoStruct) public tasks;
@@ -32,14 +32,14 @@ contract ToDo {
          toDoCount++;
         tasks[toDoCount] = toDoStruct(toDoCount, _content, false);
         emit CreateNewTaskEvent(toDoCount, _content, false);
-       
+
     }
 
     function finishTask(uint _id) public {
         require(_id>0 && _id<=toDoCount);
         require(!tasks[_id].completed);
         tasks[_id].completed = true;
-        emit FinishTaskEvent(_id, tasks[_id].content, false);
+        emit FinishTaskEvent(_id, tasks[_id].content, true);
     }
 
 }
