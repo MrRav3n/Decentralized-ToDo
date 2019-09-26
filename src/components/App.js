@@ -25,7 +25,7 @@ class App extends Component {
     }
   }
 
-  
+
 
   async loadBlockchainData() {
     const web3 = window.web3;
@@ -41,42 +41,71 @@ class App extends Component {
       const toDo = web3.eth.Contract(ToDo.abi, networkData.address);
       this.setState({toDo})
       this.setState({toDo});
-      const toDoCount = await toDo.methods.toDoCount().call();
-      for(let i=1; i<=toDoCount; i++) {
-        const task = await toDo.methods.tasks(i).call();
-        this.setState({tasks : [...this.state.tasks, task]})
-      }
 
+      this.refreshPage();
+      this.loadTasksCompleted();
+    this.setState({loading: false})
     } else {
       alert("Cannot connect to network")
     }
   }
 
   async createNewTask(newTask) {
-
+      this.setState({loading: true})
     this.state.toDo.methods.createNewTask(newTask).send({from: this.state.account}, (e) => {
      this.checkBlockTime();
     })
   }
 
   async checkBlockTime() {
+      //sleep function
     const sleep = (milliseconds) => {
       return new Promise(resolve => setTimeout(resolve, milliseconds))
     };
-    const numberBefore = await window.web3.eth.getBlockNumber();
-    let numberNow = await window.web3.eth.getBlockNumber();
-    while(numberBefore === numberNow) {
-      numberNow = await window.web3.eth.getBlockNumber();
-      await sleep(250);
+    // Checking that block is mined
+    const blockNumberBefore = await window.web3.eth.getBlockNumber();
+    let blockNumberNow = await window.web3.eth.getBlockNumber();
+    while(blockNumberBefore ===  blockNumberNow) {
+        blockNumberNow = await window.web3.eth.getBlockNumber();
+        await sleep(250);
     }
-    this.setState({tasks: []});
-    const toDoCount = await this.state.toDo.methods.toDoCount().call();
-    for(let i=1; i<=toDoCount; i++) {
-      const task = await this.state.toDo.methods.tasks(i).call();
-      this.setState({tasks : [...this.state.tasks, task]})
+    this.setState({loading: false})
+    //load tasks again
+    this.refreshPage();
+    this.loadTasksCompleted();
     }
-  }
 
+    async finishTask(id) {
+        this.setState({loading:true})
+        const task = await this.state.toDo.methods.tasks(id).call();
+        if(task.completed === false) {
+            this.state.toDo.methods.finishTask(id).send({from: this.state.account}, (e) => {
+                  this.checkBlockTime();
+              })
+
+      }
+    }
+    async refreshPage() {
+        this.setState({tasks: []});
+        const toDoCount = await this.state.toDo.methods.toDoCount().call();
+        for(let i=1; i<=toDoCount; i++) {
+         const task = await this.state.toDo.methods.tasks(i).call();
+         if(task.completed === false) {
+         this.setState({tasks : [...this.state.tasks, task]})
+         }
+     }
+ }
+
+ async loadTasksCompleted() {
+     this.setState({tasksCompleted: []});
+     const toDoCount = await this.state.toDo.methods.toDoCount().call();
+     for(let i=1; i<=toDoCount; i++) {
+      const task = await this.state.toDo.methods.tasks(i).call();
+      if(task.completed === true) {
+      this.setState({tasksCompleted : [...this.state.tasksCompleted, task]})
+      }
+  }
+}
 
 
 
@@ -85,8 +114,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: '',
-      tasks: []
+        account: '',
+        tasks: [],
+        loading: true,
+        tasksCompleted: []
+
     }
   }
 
@@ -94,7 +126,11 @@ class App extends Component {
     return (
       <div>
         <Navbar account={this.state.account}/>
-        <ToDoList onClick={this.createNewTask.bind(this)} tasks = {this.state.tasks} />
+          {this.state.loading
+                ? <div className="container mt-5"><h1 className="text-center">Loading blockchain data...</h1></div>
+                : <ToDoList onClick={this.createNewTask.bind(this)} tasksCompleted={this.state.tasksCompleted} tasks = {this.state.tasks} checkboxOnClick={this.finishTask.bind(this)}/>
+          }
+
       </div>
     );
   }

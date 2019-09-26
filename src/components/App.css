@@ -2,3 +2,30 @@
 li {
     list-style: none;
 }
+.deleteSpan {
+    color: red;
+    border-right: 2px solid red;
+    transition: all 0.3s;
+}
+.deleteSpan:hover {
+    font-size:20px;
+    cursor: pointer;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+li {
+    margin: 0;
+	padding: 0;
+	background: #fff;
+	height: 40px;
+	line-height: 40px;
+	color: #666;
+}
+body {
+    background: #5c258d; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #5c258d, #4389a2); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #5c258d, #4389a2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
