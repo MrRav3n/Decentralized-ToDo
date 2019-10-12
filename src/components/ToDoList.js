@@ -37,7 +37,7 @@ class ToDoList extends React.Component {
                         <li className="d-inline"><h1 className="text-center">Tasks already completed</h1></li>
 
                         </div>
-                        //listing tasks
+
                         {this.props.tasksCompleted.map((task) => {
                             return(
                                 <div className="list-group-item col-8 font-weight-bolder " key={task.id}>
