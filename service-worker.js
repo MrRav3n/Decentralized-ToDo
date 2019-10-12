@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Decentralized-ToDo/precache-manifest.aef4e1d539f98dd803c0a7facfa278ff.js"
+  "/Decentralized-ToDo/precache-manifest.e0aa3a3c10aed93e542fac7f538b7024.js"
 );
 
 workbox.clientsClaim();

@@ -1,7 +1,7 @@
 {
   "main.css": "/Decentralized-ToDo/static/css/main.513bfcff.chunk.css",
-  "main.js": "/Decentralized-ToDo/static/js/main.92c16436.chunk.js",
-  "main.js.map": "/Decentralized-ToDo/static/js/main.92c16436.chunk.js.map",
+  "main.js": "/Decentralized-ToDo/static/js/main.9eff2207.chunk.js",
+  "main.js.map": "/Decentralized-ToDo/static/js/main.9eff2207.chunk.js.map",
   "static/css/1.3f716daa.chunk.css": "/Decentralized-ToDo/static/css/1.3f716daa.chunk.css",
   "static/js/1.9dcec5c6.chunk.js": "/Decentralized-ToDo/static/js/1.9dcec5c6.chunk.js",
   "static/js/1.9dcec5c6.chunk.js.map": "/Decentralized-ToDo/static/js/1.9dcec5c6.chunk.js.map",
@@ -10,6 +10,6 @@
   "static/css/1.3f716daa.chunk.css.map": "/Decentralized-ToDo/static/css/1.3f716daa.chunk.css.map",
   "static/css/main.513bfcff.chunk.css.map": "/Decentralized-ToDo/static/css/main.513bfcff.chunk.css.map",
   "index.html": "/Decentralized-ToDo/index.html",
-  "precache-manifest.aef4e1d539f98dd803c0a7facfa278ff.js": "/Decentralized-ToDo/precache-manifest.aef4e1d539f98dd803c0a7facfa278ff.js",
+  "precache-manifest.e0aa3a3c10aed93e542fac7f538b7024.js": "/Decentralized-ToDo/precache-manifest.e0aa3a3c10aed93e542fac7f538b7024.js",
   "service-worker.js": "/Decentralized-ToDo/service-worker.js"
 }
